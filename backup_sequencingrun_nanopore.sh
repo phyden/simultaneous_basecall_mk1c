@@ -49,7 +49,7 @@ createhash()
 {
     rundir=$1
     for fastqfile in $(find $rundir -name "*.fastq.gz" -print | grep "fastq_pass"); do
-        hash=$(md5sum $fastqfile | cut -f1 -d" ")
+        hash=$(md5sum $fastqfile | cut -f5 -d" ")
         echo "$fastqfile;$hash"
     done > $rundir/md5_sums.txt
 }
@@ -98,7 +98,7 @@ BackupRunDir()
     # copy with rsync, limit bandwith to 100Mbit
     # exclude unclassified, fast5, failed, sequencing_summary file
     logit "Copy $OutputDir to $backup_target_dir started"
-    rsync -a --bwlimit=100000 --exclude "fast5*" --exclude "*_fail" --exclude "fastq_pass_smallfiles" --exclude "unclassified" --exclude "sequencing_summary*" $OutputDir $backup_target_dir
+    rsync -a --bwlimit=100000 --exclude "fast5*" --exclude "*_fail" --exclude "fastq_pass_smallfiles" --exclude "unclassified" --exclude "sequencing_summary*" $OutputDir/ $backup_target_dir
     logit "Copy $OutputDir to $backup_target_dir ended"
 
     # create a flag file for the processing server to know that transfer is completed
