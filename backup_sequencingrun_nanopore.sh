@@ -151,7 +151,7 @@ CompleteBasecalling()
                     logit Continue basecalling $rundir $(ls $input_dir | grep -c ".fast5$") fast5 files remaining, working on $(ls $tmpdir/fast5 | grep -c ".fast5$")
 
                     # basecalling parameters:
-                    guppy_basecall_client -i $tmpdir/fast5 -s $tmpdir/basecalling -c $BCConfigPath --barcode_kits $BCBarcodeKit --compress_fastq --num_callers 2 --port 5555 --disable_pings
+                    guppy_basecall_client -i $tmpdir/fast5 -s $tmpdir/basecalling -c $BCConfigPath --barcode_kits $BCBarcodeKit --compress_fastq --num_callers 2 --port --port "ipc:///tmp/.guppy/5555" --disable_pings
 
                     # sync back to main rundir (fastq_pass)
 		    tmp_hash=$(basename $tmpdir)
